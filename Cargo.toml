@@ -8,6 +8,7 @@ edition = "2024"
 members = [
 	"copy_synthetic",
     "patent_webrender",
+	"sandbox_202510mnist",
 ]
 
 [dependencies]
