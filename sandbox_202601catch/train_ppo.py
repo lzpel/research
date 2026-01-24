@@ -5,6 +5,7 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import CheckpointCallback, EvalCallback
 from stable_baselines3.common.vec_env import SubprocVecEnv, DummyVecEnv, VecVideoRecorder
 import numpy as np
+from torchinfo import summary
 
 def train():
     # ログとモデルの保存ディレクトリ
@@ -38,6 +39,14 @@ def train():
         ent_coef=0.0,
         device="auto" # 利用可能な場合はCUDA（GPU）を自動使用
     )
+
+    # モデルの構成を out/summary.txt に書き出す
+    summary_path = os.path.join("out", "summary.txt")
+    # 入力サイズは (batch_size, observation_space_shape)
+    stats = summary(model.policy, input_size=(1, 21), verbose=0)
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write(str(stats))
+    print(f"モデルのサマリーを {summary_path} に保存しました。")
 
     # コールバック（学習途中のモデル保存など）
     checkpoint_callback = CheckpointCallback(
