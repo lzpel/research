@@ -12,4 +12,5 @@ dependencies = [
     "maturin",
     "numpy",
     "mujoco",
+    "pillow>=12.1.0",
 ]
