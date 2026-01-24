@@ -73,12 +73,13 @@ def evaluate():
     
     # ビデオ録画用のラッパー
     video_folder = "out/videos"
-    video_length = 300 # 3秒分（1ステップ0.01秒 × 300）
+    # 録画する最大ステップ数（ループで終了判定をするため、十分大きな値を設定）
+    max_video_steps = 1000 
     env = VecVideoRecorder(
         env, 
         video_folder,
         record_video_trigger=lambda x: x == 0, 
-        video_length=video_length,
+        video_length=max_video_steps,
         name_prefix="ppo_catch_evaluation"
     )
 
@@ -87,9 +88,12 @@ def evaluate():
     print("評価を開始し、動作を録画します...")
     obs = env.reset()
     
-    for _ in range(video_length):
+    done = False
+    while not done:
         action, _states = model.predict(obs, deterministic=True)
         obs, rewards, dones, infos = env.step(action)
+        # VecEnvは複数の環境を扱うため dones は配列。一つ目の環境の終了判定をチェック
+        done = dones[0]
             
     # 環境を閉じてビデオを確定
     env.close()

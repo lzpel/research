@@ -21,7 +21,7 @@
         <light pos="0 0 3.5" dir="0 0 -1" directional="true" />
         <geom name="floor" size="0 0 0.05" pos="0 0 0" type="plane" material="groundplane" />
         <!-- orange ping pong ball with collision-->
-        <body name="ball" pos="0.4 0 0.03">
+        <body name="ball" pos="0.4 0 0.8">
             <joint name="ball_joint" type="free" />
             <geom name="ball_geom" size="0.02" type="sphere" rgba="1 0.5 0 1" mass="0.0027" friction="0.5" />
         </body>

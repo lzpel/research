@@ -43,7 +43,7 @@ class CatchEnv(gym.Env):
             self.renderer = mujoco.Renderer(self.model, height=480, width=640)
         
         self.steps = 0 # ステップカウンター
-        self.max_steps = 300 # 3秒相当 (0.01s * 300)
+        self.timeout = 3 # 3秒相当
         self.info = {}
 
     def _get_obs(self):
@@ -123,19 +123,16 @@ class CatchEnv(gym.Env):
             
         self.steps += 1
             
-        terminated = False
-        # ボールが床付近（z < 0.03）まで落ちたか、外に飛んでいった場合
-        if ball_pos[2] < 0.03 or np.linalg.norm(ball_pos[:2]) > 2.0: 
-            terminated = True
-            reward -= 5.0
-            
-        # 3秒経過したら打ち切り
-        truncated = False
-        if self.steps >= self.max_steps:
+        # 経過時間を超えたら、またはボールが外に飛んでいった場合に打ち切り
+        truncated = terminated = False
+        if self.data.time >= self.timeout:
             truncated = True
+        if np.linalg.norm(ball_pos) > 2.0:
+            terminated = True
         self.info = {
             "distance": float(dist),
-            "reward": float(reward)
+            "reward": float(reward),
+            "time": self.data.time
         }
         
         return observation, reward, terminated, truncated, self.info
