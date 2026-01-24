@@ -1,0 +1,146 @@
+   Building sandbox-202601catch @ file:///C:/Users/smith/Downloads/research/sandbox_202601catch
+  × Failed to build `sandbox-202601catch @
+  │ file:///C:/Users/smith/Downloads/research/sandbox_202601catch`
+  ├─▶ The build backend returned an error
+  ╰─▶ Call to `maturin.build_editable` failed (exit code: 1)
+
+      [stdout]
+      Running `maturin pep517 build-wheel -i
+      C:\Users\smith\AppData\Local\uv\cache\builds-v0\.tmpybUPfR\Scripts\python.exe
+      --compatibility off --editable`
+
+      [stderr]
+      🐍 Found CPython 3.14 at
+      C:\Users\smith\AppData\Local\uv\cache\builds-v0\.tmpybUPfR\Scripts\python.exe
+      warning: unused manifest key: package.crate-type
+         Compiling encase v0.10.0
+         Compiling bevy_mikktspace v0.15.3
+         Compiling bevy_utils v0.15.3
+         Compiling gpu-allocator v0.27.0
+         Compiling hexasphere v15.1.0
+         Compiling naga_oil v0.16.0
+         Compiling tracing-subscriber v0.3.22
+         Compiling skrifa v0.22.3
+         Compiling pyo3-build-config v0.27.2
+         Compiling sysinfo v0.32.1
+         Compiling cpal v0.15.3
+         Compiling accesskit_windows v0.24.1
+         Compiling gilrs-core v0.6.7
+         Compiling gltf v1.4.1
+         Compiling bevy_reflect v0.15.3
+         Compiling wgpu-hal v23.0.1
+         Compiling gilrs v0.11.1
+         Compiling rodio v0.19.0
+         Compiling accesskit_winit v0.23.1
+         Compiling pyo3-ffi v0.27.2
+         Compiling pyo3-macros-backend v0.27.2
+         Compiling pyo3 v0.27.2
+         Compiling numpy v0.27.1
+         Compiling swash v0.1.19
+         Compiling pyo3-macros v0.27.2
+         Compiling wgpu-core v23.0.1
+         Compiling bevy_ecs v0.15.4
+         Compiling bevy_math v0.15.3
+         Compiling cosmic-text v0.12.1
+         Compiling wgpu v23.0.1
+         Compiling bevy_color v0.15.4
+         Compiling bevy_app v0.15.3
+         Compiling bevy_core v0.15.3
+         Compiling bevy_asset v0.15.3
+         Compiling bevy_a11y v0.15.3
+         Compiling bevy_time v0.15.3
+         Compiling bevy_log v0.15.3
+         Compiling bevy_hierarchy v0.15.3
+         Compiling bevy_input v0.15.3
+         Compiling bevy_diagnostic v0.15.3
+         Compiling bevy_transform v0.15.3
+         Compiling bevy_state v0.15.3
+         Compiling bevy_window v0.15.3
+         Compiling bevy_gilrs v0.15.3
+         Compiling bevy_image v0.15.3
+         Compiling bevy_audio v0.15.3
+         Compiling bevy_mesh v0.15.3
+         Compiling bevy_winit v0.15.3
+         Compiling bevy_render v0.15.3
+         Compiling bevy_core_pipeline v0.15.3
+         Compiling bevy_picking v0.15.3
+         Compiling bevy_scene v0.15.3
+         Compiling bevy_animation v0.15.3
+         Compiling bevy_sprite v0.15.3
+         Compiling bevy_pbr v0.15.3
+         Compiling bevy_text v0.15.3
+         Compiling bevy_ui v0.15.3
+         Compiling bevy_gizmos v0.15.3
+         Compiling bevy_gltf v0.15.3
+         Compiling bevy_internal v0.15.3
+         Compiling bevy v0.15.3
+         Compiling catch v0.1.0
+      (C:\Users\smith\Downloads\research\sandbox_202601catch)
+      warning: unused import: `PyArray1`
+       --> src\lib.rs:2:13
+        |
+      2 | use numpy::{PyArray1, PyReadonlyArray1};
+        |             ^^^^^^^^
+        |
+        = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by
+      default
+
+      error[E0599]: no method named `add_function` found for reference
+      `&pyo3::types::PyModule` in the current scope
+        --> src\lib.rs:13:7
+         |
+      13 |     m.add_function(wrap_pyfunction!(sum_f64, m)?)?;
+         |       ^^^^^^^^^^^^ method not found in `&pyo3::types::PyModule`
+
+      error[E0277]: the trait bound `&pyo3::types::PyModule:
+      WrapPyFunctionArg<'_, _>` is not satisfied
+        --> src\lib.rs:13:46
+         |
+      13 |     m.add_function(wrap_pyfunction!(sum_f64, m)?)?;
+         |                    --------------------------^-
+         |                    |                         |
+         |                    |                         the
+      trait `WrapPyFunctionArg<'_, _>` is not implemented for
+      `&pyo3::types::PyModule`
+         |                    required by a bound introduced by this call
+         |
+         = help: the following other types implement trait
+      `WrapPyFunctionArg<'py, T>`:
+                   &pyo3::Borrowed<'_, 'py, pyo3::types::PyModule>
+                   &pyo3::Bound<'py, pyo3::types::PyModule>
+                   pyo3::Borrowed<'_, 'py, pyo3::types::PyModule>
+                   pyo3::Bound<'py, pyo3::types::PyModule>
+                   pyo3::Python<'py>
+
+      error[E0277]: the trait bound `&pyo3::types::PyModule: From<BoundRef<'_,
+      '_, pyo3::types::PyModule>>` is not satisfied
+        --> src\lib.rs:11:1
+         |
+      11 | #[pymodule]
+         | ^^^^^^^^^^^ the trait `From<BoundRef<'_, '_,
+      pyo3::types::PyModule>>` is not implemented for `&pyo3::types::PyModule`
+         |
+         = note: required for `BoundRef<'_, '_, pyo3::types::PyModule>` to
+      implement `Into<&pyo3::types::PyModule>`
+         = note: this error originates in the attribute macro `pymodule` (in
+      Nightly builds, run with -Z macro-backtrace for more info)
+
+      Some errors have detailed explanations: E0277, E0599.
+      For more information about an error, try `rustc --explain E0277`.
+      warning: `catch` (lib) generated 1 warning
+      error: could not compile `catch` (lib) due to 3 previous errors; 1
+      warning emitted
+      warning: build failed, waiting for other jobs to finish...
+      💥 maturin failed
+        Caused by: Failed to build a native library through cargo
+        Caused by: Cargo build finished with "exit code: 101":
+      `"cargo" "rustc" "--profile" "release" "--message-format"
+      "json-render-diagnostics" "--manifest-path"
+      "C:\\Users\\smith\\Downloads\\research\\sandbox_202601catch\\Cargo.toml"
+      "--bin" "catch"`
+      Error: command ['maturin', 'pep517', 'build-wheel', '-i',
+      'C:\\Users\\smith\\AppData\\Local\\uv\\cache\\builds-v0\\.tmpybUPfR\\Scripts\\python.exe',
+      '--compatibility', 'off', '--editable'] returned non-zero exit status 1
+
+      hint: This usually indicates a problem with the package or the build
+      environment.

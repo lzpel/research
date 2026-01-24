@@ -1,0 +1,13 @@
+[package]
+name = "catch"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+name = "catch"
+crate-type = ["cdylib"]
+
+[dependencies]
+bevy = "*"
+pyo3 = { version = "*", features = ["extension-module"] }
+numpy = "*"
