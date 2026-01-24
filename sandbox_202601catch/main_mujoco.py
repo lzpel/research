@@ -6,7 +6,7 @@ import math
 
 def main():
     # Load the model from the XML file
-    model_path = os.path.join("SO101", "scene.xml")
+    model_path = os.path.abspath(os.path.join("SO101", "scene_with_ball.xml"))
     if not os.path.exists(model_path):
         print(f"Error: {model_path} not found.")
         return
