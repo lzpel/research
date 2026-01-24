@@ -13,4 +13,27 @@ dependencies = [
     "numpy",
     "mujoco",
     "pillow>=12.1.0",
+    "gymnasium>=1.2.3",
+    "pytest",
+    "torch",
+    "torchvision",
+    "stable-baselines3",
+    "tensorboard",
+    "tqdm",
+    "rich",
+    "moviepy",
 ]
+
+[tool.uv]
+package = true
+# PyTorchの公式リポジトリを優先的に参照するように設定
+index-strategy = "unsafe-best-match"
+
+[[tool.uv.index]]
+name = "pytorch-gpu"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-gpu" }
+torchvision = { index = "pytorch-gpu" }

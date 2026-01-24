@@ -1,0 +1,29 @@
+C:\Users\smith\Downloads\research\sandbox_202601catch\.venv\Lib\site-packages\gymnasium\spaces\box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+C:\Users\smith\Downloads\research\sandbox_202601catch\.venv\Lib\site-packages\gymnasium\spaces\box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+C:\Users\smith\Downloads\research\sandbox_202601catch\.venv\Lib\site-packages\stable_baselines3\common\on_policy_algorithm.py:150: UserWarning: You are trying to run PPO on the GPU, but it is primarily intended to run on the CPU when not using a CNN policy (you are using ActorCriticPolicy which should be a MlpPolicy). See https://github.com/DLR-RM/stable-baselines3/issues/1245 for more info. You can pass `device='cpu'` or `export CUDA_VISIBLE_DEVICES=` to force using the CPU.Note: The model will train, but the GPU utilization will be poor and the training might take longer than on CPU.
+  warnings.warn(
+Using cuda device
+Starting training for 100000 steps...
+Logging to logs\PPO_5
+Traceback (most recent call last):
+  File "C:\Users\smith\Downloads\research\sandbox_202601catch\train_ppo.py", line 104, in <module>
+    train()
+  File "C:\Users\smith\Downloads\research\sandbox_202601catch\train_ppo.py", line 51, in train
+    model.learn(
+  File "C:\Users\smith\Downloads\research\sandbox_202601catch\.venv\Lib\site-packages\stable_baselines3\ppo\ppo.py", line 311, in learn
+    return super().learn(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\smith\Downloads\research\sandbox_202601catch\.venv\Lib\site-packages\stable_baselines3\common\on_policy_algorithm.py", line 311, in learn
+    total_timesteps, callback = self._setup_learn(
+                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\smith\Downloads\research\sandbox_202601catch\.venv\Lib\site-packages\stable_baselines3\common\base_class.py", line 434, in _setup_learn
+    callback = self._init_callback(callback, progress_bar)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\smith\Downloads\research\sandbox_202601catch\.venv\Lib\site-packages\stable_baselines3\common\base_class.py", line 378, in _init_callback
+    callback = CallbackList([callback, ProgressBarCallback()])
+                                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\smith\Downloads\research\sandbox_202601catch\.venv\Lib\site-packages\stable_baselines3\common\callbacks.py", line 709, in __init__
+    raise ImportError(
+ImportError: You must install tqdm and rich in order to use the progress bar callback. It is included if you install stable-baselines with the extra packages: `pip install stable-baselines3[extra]`
