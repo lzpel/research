@@ -3,7 +3,8 @@ name = "sandbox-20260208build123d"
 version = "0.1.0"
 description = "Build123d Tea Cup Viewer"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11, <3.13"
 dependencies = [
     "build123d",
+    "ocp-vscode",
 ]
