@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium CAD Viewer | three-cad-viewer</title>
+    <!-- CSS for premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0d12;
+            --accent-color: #4facfe;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            color: white;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        #viewer-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            margin-top: 5px;
+        }
+
+        #cv {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Overlay for premium glassmorphism */
+        .controls-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 3px solid #FFF;
+            border-bottom-color: var(--accent-color);
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <!-- Load Three.js and three-cad-viewer -->
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+            "three-cad-viewer": "https://cdn.jsdelivr.net/npm/three-cad-viewer@1.8.1/dist/three-cad-viewer.esm.js"
+          }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <span class="loader"></span>
+    </div>
+
+    <div id="viewer-container">
+        <header>
+            <h1>Tea Cup Explorer</h1>
+            <div class="status">Build123d + three-cad-viewer</div>
+        </header>
+
+        <div id="cv"></div>
+
+        <div class="controls-hint">
+            Rotate: Left Click • Zoom: Scroll • Pan: Right Click
+        </div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+        import { Viewer } from 'three-cad-viewer';
+
+        async function init() {
+            const container = document.getElementById('cv');
+
+            // Initialize basic three-cad-viewer
+            // Since we are loading a GLB, we use the viewer as a wrapper
+            const options = {
+                theme: 'dark',
+                ortho: false,
+                control: 'orbit',
+                ambientIntensity: 0.5,
+                directIntensity: 0.8,
+                showGrid: true,
+                transparent: true,
+                blackEdges: false
+            };
+
+            const viewer = new Viewer(container, options);
+
+            // Load the model
+            const loader = new GLTFLoader();
+            loader.load('model.glb', (gltf) => {
+                const model = gltf.scene;
+
+                // Add model to viewer's scene
+                viewer.render(model);
+
+                // Adjust camera to fit the model
+                viewer.fit();
+
+                // Hide loader
+                document.getElementById('loading-overlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading-overlay').style.display = 'none';
+                }, 500);
+            }, undefined, (error) => {
+                console.error('Error loading model:', error);
+                alert('Failed to load model.glb. Make sure the server is running.');
+            });
+
+            // Handle window resizing
+            window.addEventListener('resize', () => {
+                viewer.resize();
+            });
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
